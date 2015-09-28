@@ -133,6 +133,32 @@ grunt.initConfig({
 });
 ```
 
+#### Live reload
+
+The plugin supports livereload of java classes and resources with [JRebel](http://zeroturnaround.com/software/jrebel/), this requires a license,
+30 day trials are available and full details are found on the JRebel website.
+
+To use JRebel support:
+
+1. Run tomcat via the plugin at least once so that the catalina base directory is created.
+2. Download JRebel standalone and unzip into the catalina base directory created by this plugin, you should get a directory named `jrebel` containing a `jrebel.jar` file.
+3. Descend into `jrebel/bin` and activate JRebel by running `jrebel-activation.jar`
+4. You are good to go. Launch tomcat, modify java source code and classes will be instantly and automatically reloaded.
+
+```
+// Additional jar files added to classpath
+grunt.initConfig({
+  tomcat: {
+    docBase: 'src/main/webapp',
+    jrebel: true,
+    classpath: [
+      'build/classes',
+      'lib/*.jar'
+    ]
+  },
+});
+```
+
 ## Release History
 
 * 2015-09-27   v0.1.0   Initial release

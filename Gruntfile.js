@@ -32,6 +32,7 @@ module.exports = function(grunt) {
     tomcat: {
       options: {
         docBase: 'WebContent',
+        jrebel: true,
         classpath: [
           'build/classes/',
           'lib/bin/',

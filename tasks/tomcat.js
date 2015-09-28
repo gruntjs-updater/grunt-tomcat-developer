@@ -107,8 +107,17 @@ module.exports = function(grunt) {
       docBase: 'build/webapp'
     });
     
+    // Setup jrebel
+    var javaOpts = options.javaOpts;
+    if( options.jrebel ) {
+      javaOpts = ( javaOpts || '' ) +
+        ' -javaagent:' + process.cwd() + '/' + options.catalinaBase +
+        '/jrebel/jrebel.jar'
+    }
+    
+    // Setup environment
     var env = merge( process.env, {
-      'JAVA_OPTS': options.javaOpts,
+      'JAVA_OPTS': javaOpts,
       'CATALINA_BASE': process.cwd() + '/' + options.catalinaBase
     });
     
