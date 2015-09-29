@@ -2,22 +2,22 @@
   "name": "grunt-tomcat-developer",
   "description": "Grunt plugin to serve a webapp using tomcat",
   "version": "0.2.0",
-  "homepage": "https://github.com/amurdoch84/grunt-tomcat-developer",
+  "homepage": "https://github.com/3urdoch/grunt-tomcat-developer",
   "author": {
     "name": "Andrew Murdoch",
     "email": "aj.murdoch@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/amurdoch84/grunt-tomcat-developer.git"
+    "url": "git://github.com/3urdoch/grunt-tomcat-developer.git"
   },
   "bugs": {
-    "url": "https://github.com/amurdoch84/grunt-tomcat-developer/issues"
+    "url": "https://github.com/3urdoch/grunt-tomcat-developer/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/amurdoch84/grunt-tomcat-developer/blob/master/LICENSE-MIT"
+      "url": "https://github.com/3urdoch/grunt-tomcat-developer/blob/master/LICENSE-MIT"
     }
   ],
   "engines": {

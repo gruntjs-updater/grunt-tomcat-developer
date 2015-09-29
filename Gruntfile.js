@@ -1,6 +1,6 @@
 /*
  * grunt-tomcat-developer
- * https://github.com/amurdoch84/grunt-tomcat-developer
+ * https://github.com/3urdoch/grunt-tomcat-developer
  *
  * Copyright (c) 2015 Andrew Murdoch
  * Licensed under the MIT license.
