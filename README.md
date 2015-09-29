@@ -172,5 +172,6 @@ grunt.initConfig({
 ```
 
 ## Release History
-* 2015-09-27   v0.1.0   JRebel support, restart command
+* 2015-09-29   v0.2.1   Fixed repo urls
+* 2015-09-29   v0.2.0   JRebel support, restart command
 * 2015-09-27   v0.1.0   Initial release
