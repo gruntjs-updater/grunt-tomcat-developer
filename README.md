@@ -71,6 +71,12 @@ To stop the tomcat instance
 grunt tomcat:stop
 ```
 
+To restart the tomcat instance
+
+```
+grunt tomcat:restart
+```
+
 #### Alternative locations
 
 ```

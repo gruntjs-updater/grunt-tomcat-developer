@@ -98,6 +98,22 @@ module.exports = function(grunt) {
     return env.CATALINA_HOME + '/bin/catalina.sh';
   }
   
+  // Call the tomcat process
+  function exec( args, env, callback ) {
+    var executable = getExecutable( env );
+    var done = grunt.task.current.async();
+    var tomcat = spawn( executable, args, {
+      stdio: 'pipe',
+      env: env
+    });
+    tomcat.on('close', function() {
+      done();
+      if( callback ) {
+        callback();
+      }
+    });
+  }
+  
   // The tomcat task
   grunt.registerTask('tomcat', 'Grunt plugin to serve a webapp using tomcat', function( cmd ) {
   
@@ -117,22 +133,40 @@ module.exports = function(grunt) {
     
     // Setup environment
     var env = merge( process.env, {
-      'JAVA_OPTS': javaOpts,
-      'CATALINA_BASE': process.cwd() + '/' + options.catalinaBase
+      'CATALINA_BASE': process.cwd() + '/' + options.catalinaBase,
+      'CATALINA_PID': process.cwd() + '/' + options.catalinaBase + '/pid'
     });
     
-    var executable = getExecutable( env );
-    
-    if( cmd === 'start' || cmd === 'status' ) {
+    // Special startup tasks
+    if( cmd === 'start' ) {
+      env.JAVA_OPTS = javaOpts;
       makeRoot( env, options );
       createContext( env, options );
-            setupClasspath( env, options );
+      setupClasspath( env, options );
     }
     
-    var tomcat = spawn( executable, [ cmd ], {
-      stdio: 'pipe',
-      env: env
-    });
+    if( cmd === 'restart' ) {
+      grunt.log.writeln( 'Tomcat restarting' );
+      exec( ['stop','-force'], env, function() {
+        exec( ['start'], env, function() {
+            grunt.log.writeln( 'Tomcat restarted' );
+        });
+      });
+    }
+    
+    else if( cmd === 'start' ) {
+      grunt.log.writeln( 'Tomcat starting' );
+      exec( ['start'], env, function() {
+          grunt.log.writeln( 'Tomcat started' );
+      });
+    }
+    
+    else if( cmd === 'stop' ) {
+      grunt.log.writeln( 'Tomcat stopping' );
+      exec( ['stop'], env, function() {
+          grunt.log.writeln( 'Tomcat stoped' );
+      });
+    }
     
   });
 
