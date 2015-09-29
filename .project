@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>grunt-tomcat</name>
+	<name>grunt-tomcat-developer</name>
 	<comment></comment>
 	<projects>
-		<project>grunt-tomcat-lib</project>
+		<project>grunt-tomcat-developer-lib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

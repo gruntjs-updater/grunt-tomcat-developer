@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="grunt-tomcat">
+    <wb-module deploy-name="grunt-tomcat-developer">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <dependent-module archiveName="grunt-tomcat-lib.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/grunt-tomcat-lib/grunt-tomcat-lib">
+        <dependent-module archiveName="grunt-tomcat-developer-lib.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/grunt-tomcat-lib/grunt-tomcat-lib">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="grunt-tomcat"/>
-        <property name="java-output-path" value="/grunt-tomcat/build/classes"/>
+        <property name="context-root" value="grunt-tomcat-developer"/>
+        <property name="java-output-path" value="/grunt-tomcat-developer/build/classes"/>
     </wb-module>
 </project-modules>

@@ -13,7 +13,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/grunt-tomcat-lib"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/grunt-tomcat-developer-lib"/>
 	<classpathentry kind="lib" path="/Users/andrewmurdoch/.m2/repository/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>

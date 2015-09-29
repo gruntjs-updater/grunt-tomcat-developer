@@ -1,6 +1,6 @@
 /*
- * grunt-tomcat
- * https://github.com/propertypal/grunt-tomcat
+ * grunt-tomcat-developer
+ * https://github.com/propertypal/grunt-tomcat-developer
  *
  * Copyright (c) 2015 Andrew Murdoch
  * Licensed under the MIT license.
