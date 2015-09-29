@@ -38,7 +38,7 @@ grunt.initConfig({
 
 #### docBase
 Type: `String`
-Default value: `'build/classes'`
+Default value: `'build/webapp`
 
 This defines the directory that is is used as docBase of the tomcat context.
 
@@ -54,10 +54,16 @@ Default value: `''`
 
 This defines the options passed to tomcat when starting up.
 
+#### classpath
+Type: `Array`
+Default value: `[]`
+
+This defines the classpath entries that the tomcat instance is configured with.
+
 ### Usage Examples
 
 To use the tomcat task, you must supply an additional argument that will be
-passed to the tomcat control script, typically `start` and `stop`.
+passed to the tomcat control script, typically `start`, `stop` and `restart`.
 
 To start the tomcat instance:
 
