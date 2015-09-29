@@ -1,7 +1,7 @@
 {
   "name": "grunt-tomcat-developer",
   "description": "Grunt plugin to serve a webapp using tomcat",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/amurdoch84/grunt-tomcat-developer",
   "author": {
     "name": "Andrew Murdoch",
