@@ -138,7 +138,7 @@ module.exports = function(grunt) {
     });
     
     // Special startup tasks
-    if( cmd === 'start' ) {
+    if( cmd === 'start' || cmd === 'restart' ) {
       env.JAVA_OPTS = javaOpts;
       makeRoot( env, options );
       createContext( env, options );
