@@ -52,42 +52,51 @@ module.exports = function(grunt) {
   
   // Create a context Configuration
   function createContext( env, options ) {
-    var content = '<?xml version="1.0" encoding="utf-8"?>\n' +
+    var cp = '<?xml version="1.0" encoding="utf-8"?>\n' +
       '<Context docBase="' + process.cwd() + '/' + options.docBase + '"\n' +
-      '   antiResourceLocking="false"\n' +
-      '   antiJARLocking="false"\n' +
       '   path=""\n' +
       '   reloadable="false"\n' +
       '   allowLinking="true"\n' +
       '   unpackWAR="true">\n' +
-      '</Context>\n';
-    grunt.file.write( env.CATALINA_BASE + '/conf/Catalina/localhost/ROOT.xml', content );
-  }
-  
-  // Get the users home directory
-  function getUserHome() {
-    return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
-  }
-  
-  // Setup classpath
-  function setupClasspath( env, opts ) {
-    if( opts.classpath ) {
-      var classpath = '';
-      opts.classpath.forEach( function( path ) {
+      '  <JarScanner scanBootstrapClassPath="true"/>\n'
+
+    if( options.classpath ) {
+      cp += '  <Resources className="org.apache.catalina.webresources.StandardRoot">\n';
+      
+      options.classpath.forEach( function( path ) {
+        
         if( path.match( /^~\/.*/ ) ) {
           path = path.replace( /^~\//, getUserHome() + '/' );
         }
         else if( !path.match( /^\/.*/ ) ) {
           path = process.cwd() + '/' + path;
         }
-        classpath += ( classpath.length > 0 ? ',' : '' ) + path;
+        
+        if( path.match( /.*\/$/ ) ) {
+          cp += '    <PreResources className="org.apache.catalina.webresources.DirResourceSet"\n';
+          cp += '      base="' + path + '"\n';
+          cp += '      internalPath="/"\n';
+          cp += '      webAppMount="/WEB-INF/classes" />\n';
+        }
+        else {
+          cp += '    <PreResources className="org.apache.catalina.webresources.JarResourceSet"\n';
+          cp += '      base="' + path + '"\n';
+          cp += '      internalPath="/"\n';
+          cp += '      webAppMount="/WEB-INF/classes" />\n';
+        }
+        
       });
       
-      var propsFilePath = env.CATALINA_BASE + '/conf/catalina.properties';
-      var propsFileContent = grunt.file.read( propsFilePath );
-      propsFileContent = propsFileContent.replace( /shared\.loader=.*/g, 'shared.loader=' + classpath );
-      grunt.file.write( propsFilePath, propsFileContent );
+      cp += '  </Resources>\n';
     }
+
+    cp += '</Context>\n';
+    grunt.file.write( env.CATALINA_BASE + '/conf/Catalina/localhost/ROOT.xml', cp );
+  }
+  
+  // Get the users home directory
+  function getUserHome() {
+    return process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
   }
   
   // Determine which executable to use
@@ -128,7 +137,7 @@ module.exports = function(grunt) {
     if( options.jrebel ) {
       javaOpts = ( javaOpts || '' ) +
         ' -javaagent:' + process.cwd() + '/' + options.catalinaBase +
-        '/jrebel/jrebel.jar'
+        '/jrebel/jrebel.jar';
     }
     
     // Setup environment
@@ -142,7 +151,6 @@ module.exports = function(grunt) {
       env.JAVA_OPTS = javaOpts;
       makeRoot( env, options );
       createContext( env, options );
-      setupClasspath( env, options );
     }
     
     if( cmd === 'restart' ) {
