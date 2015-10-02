@@ -168,9 +168,11 @@ module.exports = function(grunt) {
     // Setup jrebel
     var javaOpts = options.javaOpts;
     if( options.jrebel ) {
-      javaOpts = ( javaOpts || '' ) +
-        ' -javaagent:' + process.cwd() + '/' + options.catalinaBase +
-        '/jrebel/jrebel.jar';
+      var jrebelPath = process.cwd() + '/' + options.catalinaBase + '/jrebel/jrebel.jar';
+      if( !grunt.file.exists( jrebelPath ) ) {
+        jrebelPath = process.env.CATALINA_HOME + '/jrebel/jrebel.jar';
+      }
+      javaOpts = ( javaOpts || '' ) + ' -javaagent:' + jrebelPath;
     }
     
     // Setup environment
