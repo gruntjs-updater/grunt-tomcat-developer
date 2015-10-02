@@ -132,6 +132,11 @@ module.exports = function(grunt) {
       docBase: 'build/webapp'
     });
     
+    // Check CATALINA_HOME is defined
+    if( !process.env.CATALINA_HOME ) {
+      grunt.log.fail( 'CATALINA_HOME is not defined' );
+    }
+    
     // Setup jrebel
     var javaOpts = options.javaOpts;
     if( options.jrebel ) {
