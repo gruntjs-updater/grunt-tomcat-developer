@@ -58,36 +58,64 @@ module.exports = function(grunt) {
       '   reloadable="false"\n' +
       '   allowLinking="true"\n' +
       '   unpackWAR="true">\n' +
-      '  <JarScanner scanBootstrapClassPath="true"/>\n'
+      '  <JarScanner scanAllDirectories="true" />\n';
 
     if( options.classpath ) {
-      cp += '  <Resources className="org.apache.catalina.webresources.StandardRoot">\n';
       
-      options.classpath.forEach( function( path ) {
+      if( options.compatability === '7' || options.compatability === '6' ) {
         
-        if( path.match( /^~\/.*/ ) ) {
-          path = path.replace( /^~\//, getUserHome() + '/' );
-        }
-        else if( !path.match( /^\/.*/ ) ) {
-          path = process.cwd() + '/' + path;
-        }
+        var absolutePaths = [];
         
-        if( path.match( /.*\/$/ ) ) {
-          cp += '    <PreResources className="org.apache.catalina.webresources.DirResourceSet"\n';
-          cp += '      base="' + path + '"\n';
-          cp += '      internalPath="/"\n';
-          cp += '      webAppMount="/WEB-INF/classes" />\n';
-        }
-        else {
-          cp += '    <PreResources className="org.apache.catalina.webresources.JarResourceSet"\n';
-          cp += '      base="' + path + '"\n';
-          cp += '      internalPath="/"\n';
-          cp += '      webAppMount="/WEB-INF/classes" />\n';
-        }
+        options.classpath.forEach( function( path ) {
+          
+          if( path.match( /^~\/.*/ ) ) {
+            path = path.replace( /^~\//, getUserHome() + '/' );
+          }
+          else if( !path.match( /^\/.*/ ) ) {
+            path = process.cwd() + '/' + path;
+          }
+          absolutePaths.push( path );
+        });
         
-      });
+        cp += '  <Resources className="org.apache.naming.resources.VirtualDirContext"\n' +
+            '      extraResourcePaths="/WEB-INF/classes=' + absolutePaths.join(',') + '" />\n' +
+            '  <Loader className="org.apache.catalina.loader.VirtualWebappLoader"\n' +
+            '      virtualClasspath="' + absolutePaths.join(';') + '" />\n';
+        
+      }
       
-      cp += '  </Resources>\n';
+      else {
+      
+        cp += '  <Resources className="org.apache.catalina.webresources.StandardRoot">\n';
+        
+        options.classpath.forEach( function( path ) {
+          
+          if( path.match( /^~\/.*/ ) ) {
+            path = path.replace( /^~\//, getUserHome() + '/' );
+          }
+          else if( !path.match( /^\/.*/ ) ) {
+            path = process.cwd() + '/' + path;
+          }
+          
+          if( path.match( /.*\/$/ ) ) {
+            cp += '    <PreResources className="org.apache.catalina.webresources.DirResourceSet"\n';
+            cp += '      base="' + path + '"\n';
+            cp += '      internalPath="/"\n';
+            cp += '      webAppMount="/WEB-INF/classes" />\n';
+          }
+          else {
+            cp += '    <PreResources className="org.apache.catalina.webresources.JarResourceSet"\n';
+            cp += '      base="' + path + '"\n';
+            cp += '      internalPath="/"\n';
+            cp += '      webAppMount="/WEB-INF/classes" />\n';
+          }
+          
+        });
+        
+        cp += '  </Resources>\n';
+        
+      }
+
     }
 
     cp += '</Context>\n';
