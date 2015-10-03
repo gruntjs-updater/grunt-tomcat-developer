@@ -58,7 +58,10 @@ module.exports = function(grunt) {
       '   reloadable="false"\n' +
       '   allowLinking="true"\n' +
       '   unpackWAR="true">\n' +
-      '  <JarScanner scanAllDirectories="true" />\n';
+      '  <JarScanner scanAllDirectories="true"\n' +
+      '    scanAllFiles="true"\n' +
+      '    scanClassPath="true"\n' +
+      '    scanBootstrapClassPath="true" />\n';
 
     if( options.classpath ) {
       
@@ -104,10 +107,10 @@ module.exports = function(grunt) {
             cp += '      webAppMount="/WEB-INF/classes" />\n';
           }
           else {
-            cp += '    <PreResources className="org.apache.catalina.webresources.JarResourceSet"\n';
+            cp += '    <JarResources className="org.apache.catalina.webresources.FileResourceSet"\n';
             cp += '      base="' + path + '"\n';
             cp += '      internalPath="/"\n';
-            cp += '      webAppMount="/WEB-INF/classes" />\n';
+            cp += '      webAppMount="/WEB-INF/lib/' + path.substring(path.lastIndexOf('/')+1) + '" />\n';
           }
           
         });
