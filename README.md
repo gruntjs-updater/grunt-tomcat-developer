@@ -3,6 +3,24 @@
 > Grunt plugin that configures and controls a local tomcat instance to
 > ease the development of java web applications.
 
+The grunt-tomcat-developer plugin provides the ability to start, stop and
+restart a locally installed tomcat server for development use. It supports
+Tomcat 8 in its default setup, but can be configured for tomcat 7 or 6 with
+the compatibility option.
+
+The task constructs a new catalina base directory by copying configuration files
+from a locally installed tomcat instance defined by the CATALINA_HOME environment
+variable which must be defined for the task to work.
+
+The task configures a tomcat virtual webapp by automatically
+generating a context configuration that pulls in classpath entries without the
+need to copy any files. The classpath its self can be explicitly declared
+in the grunt configuration, or you can use the plugin `grunt-maven-classpath`
+to generate the classpath automatically from a maven project.
+
+The task also support live reload of java classes through JRebel which
+requires a JRebel license.
+
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
 
@@ -36,29 +54,36 @@ grunt.initConfig({
 
 ### Options
 
-#### docBase
+#### options.docBase
 Type: `String`
 Default value: `'build/webapp`
 
 This defines the directory that is is used as docBase of the tomcat context.
 
-#### catalinaBase
+#### options.catalinaBase
 Type: `String`
 Default value: `'.tomcat'`
 
 This defines the directory that is used as the CATALINA_BASE directory.
 
-#### javaOpts
+#### options.javaOpts
 Type: `String`
 Default value: `''`
 
 This defines the options passed to tomcat when starting up.
 
-#### classpath
+#### options.classpath
 Type: `Array`
 Default value: `[]`
 
 This defines the classpath entries that the tomcat instance is configured with.
+
+#### options.compatibility
+Type: `String`
+Default value: `8`
+
+This defines the compatibility mode of the plugin and can be set to
+'8', '7' or '6' to define the version of tomcat in use.
 
 ### Usage Examples
 

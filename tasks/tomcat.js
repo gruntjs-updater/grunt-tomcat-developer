@@ -65,7 +65,7 @@ module.exports = function(grunt) {
 
     if( options.classpath ) {
       
-      if( options.compatability === '7' || options.compatability === '6' ) {
+      if( options.compatibility === '7' || options.compatibility === '6' ) {
         
         var absolutePaths = [];
         
