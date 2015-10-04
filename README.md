@@ -163,7 +163,7 @@ grunt.initConfig({
 #### Larger Heap
 
 ```
-// Additional jar files added to classpath
+// Larger heap specified in javaOpts
 grunt.initConfig({
   tomcat: {
     options: {
@@ -186,7 +186,7 @@ The plugin supports livereload of java classes and resources with [JRebel](http:
 To use JRebel support:
 
 1. Run tomcat via the plugin at least once so that the catalina base directory is created.
-2. Download JRebel standalone and unzip into the catalina base directory created by this plugin, you should get a directory named `jrebel` containing a `jrebel.jar` file.
+2. Download JRebel standalone and unzip into the CATALINA_HOME directory, you should have a directory named `jrebel` containing a `jrebel.jar` file within CATALINA_HOME.
 3. Descend into `jrebel/bin` and activate JRebel by running `jrebel-activation.jar`
 4. You are good to go. Launch tomcat, modify java source code and classes will be instantly and automatically reloaded.
 
