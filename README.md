@@ -115,10 +115,12 @@ grunt tomcat:restart
 //  a classpath of `build/classes`
 grunt.initConfig({
   tomcat: {
-    docBase: 'src/main/webapp'
-    classpath: [
-      'build/classes'
-    ]
+    options: {
+      docBase: 'src/main/webapp'
+      classpath: [
+        'build/classes'
+      ]
+    }
   },
 });
 ```
@@ -129,11 +131,13 @@ grunt.initConfig({
 // Additional jar files added to classpath
 grunt.initConfig({
   tomcat: {
-    docBase: 'src/main/webapp'
-    classpath: [
-      'build/classes',
-      'lib/*.jar'
-    ]
+    options: {
+      docBase: 'src/main/webapp'
+      classpath: [
+        'build/classes',
+        'lib/*.jar'
+      ]
+    }
   },
 });
 ```
@@ -144,12 +148,14 @@ grunt.initConfig({
 // Additional jar files added to classpath
 grunt.initConfig({
   tomcat: {
-    docBase: 'src/main/webapp'
-    classpath: [
-      'build/classes',
-      'lib/*.jar',
-      '~/.m2/repository/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.jar'
-    ]
+    options: {
+      docBase: 'src/main/webapp'
+      classpath: [
+        'build/classes',
+        'lib/*.jar',
+        '~/.m2/repository/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.jar'
+      ]
+    }
   },
 });
 ```
@@ -160,12 +166,14 @@ grunt.initConfig({
 // Additional jar files added to classpath
 grunt.initConfig({
   tomcat: {
-    docBase: 'src/main/webapp',
-    javaOpts: '-Xmx1024m'
-    classpath: [
-      'build/classes',
-      'lib/*.jar'
-    ]
+    options: {
+      docBase: 'src/main/webapp',
+      javaOpts: '-Xmx1024m'
+      classpath: [
+        'build/classes',
+        'lib/*.jar'
+      ]
+    }
   },
 });
 ```
@@ -186,12 +194,14 @@ To use JRebel support:
 // Additional jar files added to classpath
 grunt.initConfig({
   tomcat: {
-    docBase: 'src/main/webapp',
-    jrebel: true,
-    classpath: [
-      'build/classes',
-      'lib/*.jar'
-    ]
+    options: {
+      docBase: 'src/main/webapp',
+      jrebel: true,
+      classpath: [
+        'build/classes',
+        'lib/*.jar'
+      ]
+    }
   },
 });
 ```

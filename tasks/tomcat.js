@@ -59,7 +59,6 @@ module.exports = function(grunt) {
       '   allowLinking="true"\n' +
       '   unpackWAR="true">\n' +
       '  <JarScanner scanAllDirectories="true"\n' +
-      '    scanAllFiles="true"\n' +
       '    scanClassPath="true"\n' +
       '    scanBootstrapClassPath="true" />\n';
 
