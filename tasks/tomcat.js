@@ -140,17 +140,25 @@ module.exports = function(grunt) {
   // Call the tomcat process
   function exec( args, env, callback ) {
     var executable = getExecutable( env );
-    var done = grunt.task.current.async();
-    var tomcat = spawn( executable, args, {
-      stdio: 'pipe',
-      env: env
-    });
-    tomcat.on('close', function() {
-      done();
-      if( callback ) {
-        callback();
+
+    grunt.util.spawn({
+      cmd: executable,
+      args: args,
+      opts: {
+        stdio: 'inherit',
+        env: env
+      }
+    }, function(err, result, code) {
+      if( err ) {
+        grunt.log.error().error('Failed to invoke catalina');
+      }
+      else {
+        if( callback ) {
+          callback( err, result, code );
+        }
       }
     });
+    
   }
   
   // The tomcat task
@@ -185,31 +193,31 @@ module.exports = function(grunt) {
     
     // Special startup tasks
     if( cmd === 'start' || cmd === 'restart' ) {
-      env.JAVA_OPTS = javaOpts;
       makeRoot( env, options );
       createContext( env, options );
     }
     
+    var done = this.async();
+    
     if( cmd === 'restart' ) {
-      grunt.log.writeln( 'Tomcat restarting' );
       exec( ['stop','-force'], env, function() {
-        exec( ['start'], env, function() {
-            grunt.log.writeln( 'Tomcat restarted' );
+        env.JAVA_OPTS = javaOpts;
+        exec( ['start'], env, function( err ) {
+            done( err );
         });
       });
     }
     
     else if( cmd === 'start' ) {
-      grunt.log.writeln( 'Tomcat starting' );
-      exec( ['start'], env, function() {
-          grunt.log.writeln( 'Tomcat started' );
+      env.JAVA_OPTS = javaOpts;
+      exec( ['start'], env, function( err ) {
+        done( err );
       });
     }
     
     else if( cmd === 'stop' ) {
-      grunt.log.writeln( 'Tomcat stopping' );
-      exec( ['stop'], env, function() {
-          grunt.log.writeln( 'Tomcat stoped' );
+      exec( ['stop'], env, function( err ) {
+          done( err );
       });
     }
     
