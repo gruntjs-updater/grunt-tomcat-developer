@@ -206,6 +206,77 @@ grunt.initConfig({
 });
 ```
 
+#### Maven classpath
+
+This task is designed to work along with the grunt plugin [grunt-maven-classpath](https://github.com/3urdoch/grunt-maven-classpath) which
+makes it possible to setup the tomcat instance to use the a Maven project classpath.
+
+The grun-maven-classpath plugin determines the classpath of a maven project
+and saves it to a json file, which can then be loaded and referenced as the
+classpath by `grunt-tomcat-developer`.
+
+```
+tomcat: {
+  options: {
+    docBase: 'target/webapp',
+    classpath: grunt.file.readJSON('classpath-tomcat.json'))
+  }
+},
+
+maven_classpath: {
+  tomcat: {
+    options: {
+      ...
+    }
+  }
+},
+```
+
+Then run the `grunt-maven-classpath:tomcat` task, followed by `tomcat:start`
+and tomcat will be configured with the maven classpath.
+
+To add additional items to the classpath you may concatenate the generated classpath
+with some custom additions like below.
+
+```
+tomcat: {
+  options: {
+    docBase: 'target/webapp',
+    jrebel: true,
+    classpath: [
+      'target/classes/'
+    ].concat(grunt.file.readJSON('classpath-tomcat.json')),
+  }
+},
+```
+
+And with `grunt-maven-classpath` its possible to override some maven
+dependencies so that the latest in development code for a library can be loaded
+rather from a packaged JAR stored in the maven local repository.
+
+```
+tomcat: {
+  options: {
+    docBase: 'target/webapp',
+    jrebel: true,
+    classpath: [
+      'target/classes/'
+    ].concat(grunt.file.readJSON('classpath-tomcat.json')),
+  }
+},
+
+maven_classpath: {
+  tomcat: {
+    options: {
+      overrides: [
+        artifactId: 'my-library',
+        overridePath: '/Users/bob/git/my-library/target/classes/'
+      ]
+    }
+  }
+},
+```
+
 ## Release History
 * 2015-09-29   v0.3.0   Use tomcat virtual webapp features to build classpath
 * 2015-09-29   v0.2.1   Fixed repo urls
