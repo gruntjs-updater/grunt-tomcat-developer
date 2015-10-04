@@ -279,6 +279,10 @@ maven_classpath: {
 
 ## Release History
 * 2015-09-29   v0.3.0   Use tomcat virtual webapp features to build classpath
+                        Support jrebel installation in CATALINA_HOME
+                        Fix concurrency issue when used with watch
+                        Documentation fixes and improvements
 * 2015-09-29   v0.2.1   Fixed repo urls
-* 2015-09-29   v0.2.0   JRebel support, restart command
+* 2015-09-29   v0.2.0   JRebel support
+                        Restart command
 * 2015-09-27   v0.1.0   Initial release
