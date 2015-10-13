@@ -138,7 +138,7 @@ module.exports = function(grunt) {
   }
   
   // Call the tomcat process
-  function exec( args, env, callback ) {
+  function exec( args, env, callback, force ) {
     var executable = getExecutable( env );
 
     grunt.util.spawn({
@@ -149,10 +149,10 @@ module.exports = function(grunt) {
         env: env
       }
     }, function(err, result, code) {
-      if( err ) {
+      if( err && !force ) {
         grunt.log.error().error('Failed to invoke catalina');
       }
-      else {
+      if( !err || force ) {
         if( callback ) {
           callback( err, result, code );
         }
@@ -206,6 +206,7 @@ module.exports = function(grunt) {
             done( err );
         });
       });
+      }, true );
     }
     
     else if( cmd === 'start' ) {
