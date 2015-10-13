@@ -11,6 +11,7 @@
 
 var spawn = require('cross-spawn-async');
 var merge = require('merge');
+var Tail = require('tail').Tail;
 
 module.exports = function(grunt) {
   
@@ -161,13 +162,31 @@ module.exports = function(grunt) {
     
   }
   
+  // Tail catalina.out
+  function tail( env, options ) {
+    
+    if( options.tail ) {
+      grunt.log.writeln( 'Tailing catalina.out' );
+      
+      tail = new Tail(process.cwd() + '/' + options.catalinaBase + '/logs/catalina.out');
+      tail.on("line", function(data) {
+        grunt.log.writeln(data);
+      });
+
+      tail.on("error", function(error) {
+        grunt.log.writeln('ERROR: ', error);
+      });
+    }
+  }
+  
   // The tomcat task
   grunt.registerTask('tomcat', 'Grunt plugin to serve a webapp using tomcat', function( cmd ) {
   
     var options = this.options({
       javaOpts: '',
       catalinaBase: '.tomcat',
-      docBase: 'build/webapp'
+      docBase: 'build/webapp',
+      tail: false
     });
     
     // Check CATALINA_HOME is defined
@@ -203,15 +222,16 @@ module.exports = function(grunt) {
       exec( ['stop','-force'], env, function() {
         env.JAVA_OPTS = javaOpts;
         exec( ['start'], env, function( err ) {
+            tail( env, options );
             done( err );
         });
-      });
       }, true );
     }
     
     else if( cmd === 'start' ) {
       env.JAVA_OPTS = javaOpts;
       exec( ['start'], env, function( err ) {
+        tail( env, options );
         done( err );
       });
     }
