@@ -286,6 +286,9 @@ maven_classpath: {
 ```
 
 ## Release History
+* **2015-10-13 v0.4.0**
+  * Allow restart command even if instance is not running
+  * Tail option to send tomcat console output to the grunt log
 * **2015-10-01 v0.3.0**  
   * Use tomcat virtual webapp features to build classpath
   * Support jrebel installation in CATALINA_HOME
